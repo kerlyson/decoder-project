@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/ead-authuser
-    user: postgres
+    username: postgres
     password: 12345
   jpa:
     hibernate:
