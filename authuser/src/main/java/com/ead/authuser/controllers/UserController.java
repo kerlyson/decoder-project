@@ -39,7 +39,7 @@ public class UserController {
         Optional<UserModel> userModelOptional = userService.findById(userId);
 
         if(!userModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+
         }
 
         userService.delete(userModelOptional.get());
