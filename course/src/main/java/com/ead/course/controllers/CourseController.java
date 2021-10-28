@@ -56,7 +56,7 @@ public class CourseController {
         if (!course.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found.");
         }
-        var courseModel = new CourseModel();
+        var courseModel = course.get();
         courseModel.setName(courseDto.getName());
         courseModel.setDescription(courseDto.getDescription());
         courseModel.setImageUrl(courseDto.getImageUrl());

@@ -2,7 +2,20 @@ package com.ead.course.services;
 
 import com.ead.course.models.ModuleModel;
 
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 public interface ModuleService {
 
     void delete(ModuleModel module);
+
+    ModuleModel save(ModuleModel module);
+
+    Optional<ModuleModel> findById(UUID moduleId);
+
+    Optional<ModuleModel> findModuleIntoCourse(UUID moduleId, UUID courseId);
+
+    List<ModuleModel> findAllByCourse(UUID courseId);
 }
