@@ -74,7 +74,7 @@ public class ModuleController {
         return ResponseEntity.ok(moduleService.findAllByCourse(courseId));
     }
 
-    @GetMapping("courses/{courseId}/modules/{moduleId}")
+    @GetMapping("/courses/{courseId}/modules/{moduleId}")
     public ResponseEntity<Object> getById(@PathVariable("courseId") UUID courseId, @PathVariable("moduleId") UUID moduleId) {
         Optional<ModuleModel> module = moduleService.findModuleIntoCourse(moduleId, courseId);
         if (!module.isPresent()) {
