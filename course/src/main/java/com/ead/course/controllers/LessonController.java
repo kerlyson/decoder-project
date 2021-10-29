@@ -65,7 +65,7 @@ public class LessonController {
         lessonM.setTitle(lessonDto.getTitle());
         lessonM.setDescription(lessonDto.getDescription());
         lessonM.setVideoUrl(lessonDto.getVideoUrl());
-        
+
         return ResponseEntity.ok(lessonService.save(lessonM));
     }
 
