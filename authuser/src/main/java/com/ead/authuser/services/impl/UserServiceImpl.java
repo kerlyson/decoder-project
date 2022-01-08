@@ -1,6 +1,8 @@
 package com.ead.authuser.services.impl;
 
+import com.ead.authuser.models.UserCourseModel;
 import com.ead.authuser.models.UserModel;
+import com.ead.authuser.repositories.UserCourseRepository;
 import com.ead.authuser.repositories.UserRepository;
 import com.ead.authuser.services.UserService;
 import com.ead.authuser.specifications.SpecificationTemplate;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +22,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserCourseRepository userCourseRepository;
 
     @Override
     public List<UserModel> findAll() {
@@ -32,12 +38,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(UserModel userModel) {
+        List<UserCourseModel> userCourseModels = userCourseRepository.findAllCourseIntoUser(userModel.getUserId());
+
+        if(!userCourseModels.isEmpty()){
+            userCourseRepository.deleteAll(userCourseModels);
+        }
+
         userRepository.delete(userModel);
     }
 
     @Override
-    public void save(UserModel userModel) {
-        userRepository.save(userModel);
+    public UserModel save(UserModel userModel) {
+        return userRepository.save(userModel);
     }
 
     @Override
@@ -51,7 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserModel> findAll(Pageable pageable, SpecificationTemplate.UserSpec spec) {
+    public Page<UserModel> findAll(Pageable pageable, Specification<UserModel> spec) {
         return userRepository.findAll(spec, pageable);
     }
 }
