@@ -6,6 +6,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/ead-authuser
     username: postgres
     password: 12345
+  application:
+    name: ead-authuser-service
   jpa:
     hibernate:
       ddl-auto: update
@@ -22,3 +24,10 @@ ead:
   api:
     url:
       course: 'http://localhost:8082'
+
+eureka:
+  client:
+    service-url:
+      default-zone: 'http://localhost:8761/eureka'
+  instance:
+    hostname: localhost
