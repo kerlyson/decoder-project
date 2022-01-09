@@ -1,7 +1,7 @@
 server:
-  port: 8082
+  port: ${PORT:0}
   servlet:
-    context-path: '/ead-authuser/'
+    context-path: '/ead-course/'
 
 spring:
   datasource:
@@ -30,3 +30,4 @@ eureka:
       default-zone: 'http://localhost:8761/eureka'
   instance:
     hostname: localhost
+    instance-id: ${spring.application.name}:${random.value}

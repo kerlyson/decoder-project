@@ -1,5 +1,5 @@
 server:
-  port: 8087
+  port: ${PORT:0}
   servlet:
     context-path: '/ead-authuser/'
 
@@ -32,4 +32,5 @@ eureka:
     service-url:
       default-zone: 'http://localhost:8761/eureka'
   instance:
+    instance-id: ${spring.application.name}:${random.value}
     hostname: localhost
