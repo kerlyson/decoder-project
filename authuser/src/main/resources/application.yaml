@@ -1,5 +1,7 @@
 server:
-  port: 8087
+  port: ${PORT:0}
+  servlet:
+    context-path: '/ead-authuser/'
 
 spring:
   datasource:
@@ -23,11 +25,12 @@ spring:
 ead:
   api:
     url:
-      course: 'http://ead-course-service'
+      course: 'http://ead-course-service/ead-course'
 
 eureka:
   client:
     service-url:
       default-zone: 'http://localhost:8761/eureka'
   instance:
+    instance-id: ${spring.application.name}:${random.value}
     hostname: localhost
