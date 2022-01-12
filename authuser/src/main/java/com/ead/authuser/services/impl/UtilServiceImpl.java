@@ -19,4 +19,8 @@ public class UtilServiceImpl implements UtilService {
                 + "&size=" + pageable.getPageSize()
                 + "&sort=" + pageable.getSort().toString().replace(": ", ",");
     }
+
+    public String getUrl(){
+        return REQUEST_URI_COURSE;
+    }
 }

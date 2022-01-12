@@ -51,7 +51,12 @@ public class CourseClient {
         } catch (Exception e) {
             log.error("Error request /course: {}", e);
         }
-        log.info("Endind request /course userId: {}", userId);
+        log.info("Ending request /course userId: {}", userId);
         return new PageImpl<CourseDto>(result);
+    }
+
+    public void deleteUserInCourse(UUID userId) {
+        String url = utilService.getUrl() + "/courses/users/" + userId;
+        restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
     }
 }

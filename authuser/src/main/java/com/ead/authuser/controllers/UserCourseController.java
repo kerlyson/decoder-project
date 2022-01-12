@@ -50,7 +50,7 @@ public class UserCourseController {
 
         Optional<UserModel> userModelOptional = userService.findById(userId);
         if(!userModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
 
         if(userCourseService.existsByUserAndCourseId(userModelOptional.get(), userCourseDto.getCourseId())){
@@ -59,5 +59,16 @@ public class UserCourseController {
 
         UserCourseModel model = userCourseService.save(userModelOptional.get().convertToUserCourseModel(userCourseDto.getCourseId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(model);
+    }
+
+    @DeleteMapping("/users/courses/{courseId}")
+    public ResponseEntity<Object> deleteUserCourseByCourse(@PathVariable(value = "courseId") UUID courseId){
+        if(!userCourseService.existsByCourseId(courseId)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("UserCourse not found.");
+        }
+
+        userCourseService.deleteUserCourseByCourse(courseId);
+
+        return ResponseEntity.status(HttpStatus.OK).body("UserCourse deleted successfully.");
     }
 }
