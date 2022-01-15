@@ -1,17 +1,13 @@
 package com.ead.authuser.services.impl;
 
 import com.ead.authuser.clients.CourseClient;
-import com.ead.authuser.models.UserCourseModel;
 import com.ead.authuser.models.UserModel;
-import com.ead.authuser.repositories.UserCourseRepository;
 import com.ead.authuser.repositories.UserRepository;
 import com.ead.authuser.services.UserService;
-import com.ead.authuser.specifications.SpecificationTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +20,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private UserCourseRepository userCourseRepository;
 
     @Autowired
     private CourseClient client;
@@ -44,18 +37,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void delete(UserModel userModel) {
-        boolean deleteUserCourseInCourse = false;
-        List<UserCourseModel> userCourseModels = userCourseRepository.findAllCourseIntoUser(userModel.getUserId());
-
-        if(!userCourseModels.isEmpty()){
-            deleteUserCourseInCourse = true;
-            userCourseRepository.deleteAll(userCourseModels);
-        }
-
         userRepository.delete(userModel);
-        if(deleteUserCourseInCourse){
-            client.deleteUserInCourse(userModel.getUserId());
-        }
     }
 
     @Override

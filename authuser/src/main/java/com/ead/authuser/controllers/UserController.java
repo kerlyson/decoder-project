@@ -15,10 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,15 +35,11 @@ public class UserController {
     public ResponseEntity<Page<UserModel>> getAllUsers(SpecificationTemplate.UserSpec spec, @PageableDefault(page = 0,
             size = 10,
             sort = "userId",
-            direction = Sort.Direction.ASC) Pageable pageable,
-       @RequestParam(required = false) UUID courseId) {
+            direction = Sort.Direction.ASC) Pageable pageable
+    ) {
 
-        Page<UserModel> userModelPage = null;
-        if(courseId != null){
-            userModelPage = userService.findAll(pageable, SpecificationTemplate.userCourseId(courseId).and(spec));
-        } else {
-            userModelPage = userService.findAll(pageable, spec);
-        }
+        Page<UserModel> userModelPage = userService.findAll(pageable, spec);
+
 
         if (!userModelPage.isEmpty()) {
             userModelPage.forEach(user -> user.add(
