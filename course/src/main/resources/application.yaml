@@ -19,6 +19,8 @@ spring:
     properties:
       hibernate:
         show_sql: true
+  rabbitmq:
+    addresses: amqps://ksdllxxv:7xkEOdG9P6dLKIm52bzW7gJ-m9n3VLix@baboon.rmq.cloudamqp.com/ksdllxxv
 ead:
   api:
     url:
