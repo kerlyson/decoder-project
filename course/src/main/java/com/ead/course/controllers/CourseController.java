@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -90,12 +89,10 @@ public class CourseController {
             sort = "courseId",
             direction = Sort.Direction.ASC) Pageable pageable,
                                                     @RequestParam(required = false) UUID userId){
-
-        if(userId != null){
-            return ResponseEntity.ok(courseService.findAll(SpecificationTemplate.courseUserId(userId).and(spec), pageable));
-        }
+        if(userId != null)
+            return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(SpecificationTemplate.courseUserId(userId).and(spec), pageable));
         return ResponseEntity.ok(courseService.findAll(spec, pageable));
-    }
+   }
 
     @GetMapping("/{courseId}")
     public ResponseEntity<Object> getById(@PathVariable("courseId") UUID courseId){

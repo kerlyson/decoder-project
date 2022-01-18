@@ -15,10 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,15 +35,11 @@ public class UserController {
     public ResponseEntity<Page<UserModel>> getAllUsers(SpecificationTemplate.UserSpec spec, @PageableDefault(page = 0,
             size = 10,
             sort = "userId",
-            direction = Sort.Direction.ASC) Pageable pageable,
-       @RequestParam(required = false) UUID courseId) {
+            direction = Sort.Direction.ASC) Pageable pageable
+    ) {
 
-        Page<UserModel> userModelPage = null;
-        if(courseId != null){
-            userModelPage = userService.findAll(pageable, SpecificationTemplate.userCourseId(courseId).and(spec));
-        } else {
-            userModelPage = userService.findAll(pageable, spec);
-        }
+        Page<UserModel> userModelPage = userService.findAll(pageable, spec);
+
 
         if (!userModelPage.isEmpty()) {
             userModelPage.forEach(user -> user.add(
@@ -78,7 +72,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
 
-        userService.delete(userModelOptional.get());
+        userService.deleteUser(userModelOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("User deleted.");
     }
 
@@ -99,7 +93,7 @@ public class UserController {
         userModel.setCpf(userDto.getCpf());
         userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
-        userService.save(userModel);
+        userService.updateUser(userModel);
         return ResponseEntity.status(HttpStatus.OK).body(userModel);
     }
 
@@ -123,7 +117,7 @@ public class UserController {
         userModel.setPassword(userDto.getPassword());
         userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
-        userService.save(userModel);
+        userService.updatePassword(userModel);
         return ResponseEntity.status(HttpStatus.OK).body("Password updated.");
     }
 
@@ -143,7 +137,7 @@ public class UserController {
         userModel.setImageUrl(userDto.getImageUrl());
         userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
-        userService.save(userModel);
+        userService.updateUser(userModel);
         return ResponseEntity.status(HttpStatus.OK).body(userModel);
     }
 }
