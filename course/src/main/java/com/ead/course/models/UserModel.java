@@ -44,4 +44,6 @@ public class UserModel implements Serializable {
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<CourseModel> courses;
+
+
 }
