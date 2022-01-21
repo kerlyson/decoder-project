@@ -3,7 +3,7 @@ package com.ead.authuser.clients;
 import com.ead.authuser.dtos.CourseDto;
 import com.ead.authuser.dtos.ResponsePageDto;
 import com.ead.authuser.services.UtilService;
-import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -30,7 +30,8 @@ public class CourseClient {
     private RestTemplate restTemplate;
 
 
-    @Retry(name = "retryInstance", fallbackMethod = "retryFallback")
+//    @Retry(name = "retryInstance", fallbackMethod = "retryFallback")
+    @CircuitBreaker(name="circuitbreakerInstance")
     public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable) {
         List<CourseDto> result = null;
         String url = utilService.createUrl(userId, pageable);
@@ -59,6 +60,12 @@ public class CourseClient {
 
     public Page<CourseDto> retryFallback(UUID userId, Pageable pageable, Throwable t){
         log.error("Inside retryfallback, cause - {}", t.toString());
+        List<CourseDto> searchResult = new ArrayList<>();
+        return new PageImpl<>(searchResult);
+    }
+
+    public Page<CourseDto> circuitbreakerFallback(UUID userId, Pageable pageable, Throwable t){
+        log.error("Inside circuitbreakerFallback, cause - {}", t.toString());
         List<CourseDto> searchResult = new ArrayList<>();
         return new PageImpl<>(searchResult);
     }
