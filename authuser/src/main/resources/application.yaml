@@ -40,3 +40,10 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${random.value}
     hostname: localhost
+
+resilience4j:
+  retry:
+    instances:
+      retryInstance:
+        maxRetryAttemps: 3
+        waitDuration: 5s
