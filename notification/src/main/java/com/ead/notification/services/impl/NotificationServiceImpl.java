@@ -1,5 +1,6 @@
 package com.ead.notification.services.impl;
 
+import com.ead.notification.models.NotificationModel;
 import com.ead.notification.repositories.NotificationRespository;
 import com.ead.notification.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,5 +15,10 @@ public class NotificationServiceImpl implements NotificationService {
     @Autowired
     public NotificationServiceImpl(NotificationRespository notificationRespository) {
         this.notificationRespository = notificationRespository;
+    }
+
+    @Override
+    public void saveNotification(NotificationModel notificationModel) {
+        notificationRespository.save(notificationModel);
     }
 }

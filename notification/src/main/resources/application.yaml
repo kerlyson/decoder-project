@@ -28,8 +28,19 @@ spring:
     output:
       ansi:
         enabled: always
-    rabbitmq:
-      addresses: amqps://ksdllxxv:7xkEOdG9P6dLKIm52bzW7gJ-m9n3VLix@baboon.rmq.cloudamqp.com/ksdllxxv
+  rabbitmq:
+    addresses: amqps://ksdllxxv:7xkEOdG9P6dLKIm52bzW7gJ-m9n3VLix@baboon.rmq.cloudamqp.com/ksdllxxv
+
+
+ead:
+  broker:
+    exchange:
+      notificationCommandExchange: ead.notificationcommand
+    queue:
+      notificationCommandQueue:
+        name: ead.notificationcommand.ms.notification
+    key:
+      notificationCommandKey: ms.notification
 
 logging:
   level:
