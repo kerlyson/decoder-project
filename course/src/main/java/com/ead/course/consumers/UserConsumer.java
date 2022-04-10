@@ -15,8 +15,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserConsumer {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserConsumer(UserService userService) {
+        this.userService = userService;
+    }
 
     @RabbitListener(
             bindings = @QueueBinding(
