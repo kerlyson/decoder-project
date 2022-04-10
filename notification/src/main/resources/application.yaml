@@ -1,57 +1,9 @@
-server:
-  port: 8084
-  servlet:
-    context-path: '/ead-notification/'
-
 spring:
   application:
     name: ead-notification-service
   config:
-    import: 'optional:configserver:'
+    import: 'configserver:'
   cloud:
     config:
       discovery:
         serviceId: ead-config-server
-  datasource:
-    url: jdbc:postgresql://localhost:5432/ead-notification
-    username: postgres
-    password: 12345
-  jpa:
-    hibernate:
-      ddl-auto: update
-      dialect: org.hibernate.dialect.PostgreSQLDialect
-      jdbc:
-        lob.non-contextual-creation: true
-    properties:
-      hibernate:
-        show_sql: true
-    output:
-      ansi:
-        enabled: always
-  rabbitmq:
-    addresses: amqps://ksdllxxv:7xkEOdG9P6dLKIm52bzW7gJ-m9n3VLix@baboon.rmq.cloudamqp.com/ksdllxxv
-
-
-ead:
-  broker:
-    exchange:
-      notificationCommandExchange: ead.notificationcommand
-    queue:
-      notificationCommandQueue:
-        name: ead.notificationcommand.ms.notification
-    key:
-      notificationCommandKey: ms.notification
-
-logging:
-  level:
-    com.ead: TRACE
-    root: INFO
-    org.springframework.web: DEBUG
-    org.hibernate: INFO
-
-eureka:
-  client:
-    serviceUrl:
-      default-zone: 'http://localhost:8761/eureka'
-  instance:
-    hostname: localhost
