@@ -56,7 +56,7 @@ public class CourseClient {
             result = resultRest.getBody().getContent();
 
             log.debug("Response Number of Elements: {}", result.size());
-     
+
         log.info("Ending request /course userId: {}", userId);
         return new PageImpl<CourseDto>(result);
     }
